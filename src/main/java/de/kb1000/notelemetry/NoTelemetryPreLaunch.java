@@ -19,7 +19,7 @@ public class NoTelemetryPreLaunch implements PreLaunchEntrypoint {
     public void onPreLaunch() {
         try {
             ClassLoader classLoader = getClass().getClassLoader();
-            Method m = classLoader.getClass().getMethod("addURL", URL.class);
+            Method m = classLoader.getClass().getDeclaredMethod("addUrlFwd", URL.class);
             m.setAccessible(true);
             m.invoke(classLoader, getSource(classLoader, "com/mojang/authlib/yggdrasil/YggdrasilUserApiService.class").orElseThrow());
             LOGGER.info("Added authlib to knot");

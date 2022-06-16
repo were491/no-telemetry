@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(targets = "net.minecraft.client.util.telemetry.TelemetrySender")
 @Environment(EnvType.CLIENT)
 public class TelemetrySenderMixin {
-    @Redirect(method = "<init>", at = @At(value = "FIELD", target = "Lnet/minecraft/SharedConstants;isDevelopment:Z"))
+    @Redirect(method = "<init>(Lnet/minecraft/client/MinecraftClient;Lcom/mojang/authlib/minecraft/UserApiService;Ljava/util/Optional;Ljava/util/Optional;Ljava/util/UUID;)V", at = @At(value = "FIELD", target = "Lnet/minecraft/SharedConstants;isDevelopment:Z"))
     private boolean disableTelemetrySession() {
         return true;
     }
