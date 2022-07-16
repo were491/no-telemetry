@@ -8,8 +8,17 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(YggdrasilUserApiService.class)
 public class NewYggdrasilUserApiServiceMixin {
-    @Redirect(method = "fetchProperties", at = @At(value = "INVOKE", target = "Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$Privileges;getTelemetry()Z", remap = false), remap = false, require = 0)
-    private boolean getTelemetry(UserAttributesResponse.Privileges privileges) {
+    @Redirect(
+            method = "fetchProperties()V",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lcom/mojang/authlib/yggdrasil/response/UserAttributesResponse$Privileges;getTelemetry()Z",
+                    remap = false
+            ),
+            remap = false,
+            require = 0
+    )
+    private boolean disableAuthTelemetry(UserAttributesResponse.Privileges privileges) {
         return false;
     }
 }
